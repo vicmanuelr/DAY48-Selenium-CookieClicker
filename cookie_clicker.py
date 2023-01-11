@@ -6,17 +6,20 @@ driver = webdriver.Firefox()
 
 driver.get(url="http://orteil.dashnet.org/experiments/cookie/")
 
+
 def purchase_element():
     # Getting current money value in cookies (Exception handling for values that includes ","
     try:
         current_money = int(driver.find_element(By.CSS_SELECTOR, "#money").text)
     except ValueError:
         comma_money = driver.find_element(By.CSS_SELECTOR, "#money").text.split(",")
-        current_money = int(("").join(comma_money))
+        current_money = int("".join(comma_money))
 
     # For element purchase web_element
-    xpath_list = ['//*[@id="buyCursor"]', '//*[@id="buyGrandma"]', '//*[@id="buyFactory"]', '//*[@id="buyMine"]', '//*[@id="buyShipment"]', '//*[@id="buyAlchemy lab"]', '//*[@id="buyPortal"]', '//*[@id="buyTime machine"]']
-    purchase_list = [driver.find_element(By.XPATH, f"{x}")for x in xpath_list]
+    xpath_list = ['//*[@id="buyCursor"]', '//*[@id="buyGrandma"]', '//*[@id="buyFactory"]', '//*[@id="buyMine"]',
+                  '//*[@id="buyShipment"]', '//*[@id="buyAlchemy lab"]', '//*[@id="buyPortal"]',
+                  '//*[@id="buyTime machine"]']
+    purchase_list = [driver.find_element(By.XPATH, f"{x}") for x in xpath_list]
 
     # Finding cost of each purchase element
     prices_list = []
@@ -25,7 +28,7 @@ def purchase_element():
             new_element = int(element.text.split(" - ")[1].split("\n")[0])
         except ValueError:
             comma_value = element.text.split(" - ")[1].split("\n")[0].split(",")
-            new_element = int(("").join(comma_value))
+            new_element = int("".join(comma_value))
         finally:
             prices_list.append(new_element)
 
@@ -46,7 +49,7 @@ def purchase_element():
 
 
 timeout = time.time() + 5  # 5 [seconds]
-five_minutes = time.time() + 60*5  # 5 [minutes]
+five_minutes = time.time() + 60 * 5  # 5 [minutes]
 
 while True:
     cookie = driver.find_element(By.ID, "cookie")
